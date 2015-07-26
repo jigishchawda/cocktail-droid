@@ -37,5 +37,9 @@ public class Drink {
                 ", recipe=" + recipe +
                 '}';
     }
+
+    public String getName() {
+        return name;
+    }
 }
 
