@@ -1,0 +1,54 @@
+{
+  "drinks": [
+    {
+      "name": "LIT",
+      "recipe": [{
+        "ingredient": {
+          "name": "vodka",
+          "type": "alcoholic"
+        },
+        "quantity": "30"
+        },
+        {
+          "ingredient": {
+            "name": "rum",
+            "type": "alcoholic"
+          },
+          "quantity": "30"
+        },
+        {
+          "ingredient": {
+            "name": "coke",
+            "type": "non_alcoholic"
+          },
+          "quantity": "90"
+        }
+      ]
+    },
+    {
+      "name": "Sex on the Beach",
+      "recipe": [{
+        "ingredient": {
+          "name": "Gin",
+          "type": "alcoholic"
+        },
+        "quantity": "30"
+      },
+        {
+          "ingredient": {
+            "name": "Orange Juice",
+            "type": "non_alcoholic"
+          },
+          "quantity": "60"
+        },
+        {
+          "ingredient": {
+            "name": "Pineapple Juice",
+            "type": "non_alcoholic"
+          },
+          "quantity": "60"
+        }
+      ]
+    }
+  ]
+}
