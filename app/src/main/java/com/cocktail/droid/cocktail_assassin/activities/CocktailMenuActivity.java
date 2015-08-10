@@ -1,5 +1,6 @@
 package com.cocktail.droid.cocktail_assassin.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,10 +10,13 @@ import android.view.MenuItem;
 
 import com.cocktail.droid.cocktail_assassin.R;
 import com.cocktail.droid.cocktail_assassin.adapters.DrinksMenuAdapter;
+import com.cocktail.droid.cocktail_assassin.models.Drink;
 import com.cocktail.droid.cocktail_assassin.models.DrinksMenu;
 
+import static com.cocktail.droid.cocktail_assassin.models.Drink.*;
 
-public class CocktailMenuActivity extends ActionBarActivity {
+
+public class CocktailMenuActivity extends ActionBarActivity implements DrinSelectionListener{
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter adapter;
@@ -28,7 +32,8 @@ public class CocktailMenuActivity extends ActionBarActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         // specify an adapter (see also next example)
-        adapter = new DrinksMenuAdapter(DrinksMenu.loadDrinksMenu(getResources()));
+        adapter = new DrinksMenuAdapter(DrinksMenu.loadDrinksMenu(getResources()), this);
+
         recyclerView.setAdapter(adapter);
 
     }
@@ -53,5 +58,18 @@ public class CocktailMenuActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDrinkDetailSelected(Drink drink) {
+        Intent intent = new Intent(this, DrinkDetailActivity.class);
+        intent.putExtra(DRINK_EXTRA, drink);
+
+        startActivity(intent);
+    }
+
+    @Override
+    public void onPourMeADrinkSelected(Drink drink) {
+
     }
 }

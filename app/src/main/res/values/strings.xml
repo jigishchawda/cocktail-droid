@@ -3,4 +3,7 @@
 
     <string name="cocktail_assasssin">Choose your drink Ninja</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_drink_detail">DrinkDetailActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

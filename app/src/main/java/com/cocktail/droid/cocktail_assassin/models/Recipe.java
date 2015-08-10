@@ -1,36 +1,42 @@
 package com.cocktail.droid.cocktail_assassin.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+
+import static com.cocktail.droid.cocktail_assassin.models.Ingredient.readIngredient;
+import static com.cocktail.droid.cocktail_assassin.models.Quantity.readQuantity;
 
 /**
  * Created by jigishchawda on 26/7/15.
  */
-public class Recipe {
-    private HashMap<Ingredient, Quantity> ingredientsWithQuantity;
+public class Recipe implements Parcelable {
+//    private HashMap<Ingredient, Quantity> ingredientsWithQuantity;
 
-    private Recipe(HashMap<Ingredient, Quantity> ingredientsWithQuantity) {
-        this.ingredientsWithQuantity = ingredientsWithQuantity;
+    private ArrayList<RecipeItem> recipeItems;
+
+    private Recipe(ArrayList<RecipeItem> items) {
+        this.recipeItems = items;
     }
 
     public static Recipe readRecipe(JSONArray recipeJsonArray) {
         try {
-            HashMap<Ingredient, Quantity> ingredientsWithQuantity = new HashMap<>();
+//            HashMap<Ingredient, Quantity> ingredientsWithQuantity = new HashMap<>();
+            ArrayList<RecipeItem> recipeItems = new ArrayList<>();
             for (int index = 0; index < recipeJsonArray.length(); index++) {
                 JSONObject recipeItemJSONObject = recipeJsonArray.getJSONObject(index);
 
                 JSONObject ingredientJsonObject = recipeItemJSONObject.getJSONObject("ingredient");
-                Ingredient ingredient = Ingredient.readIngredient(ingredientJsonObject);
 
-                String quantity = recipeItemJSONObject.getString("quantity");
-
-                ingredientsWithQuantity.put(ingredient, new Quantity(quantity));
+                recipeItems.add(new RecipeItem(readIngredient(ingredientJsonObject), readQuantity(recipeItemJSONObject)));
             }
 
-            return new Recipe(ingredientsWithQuantity);
+            return new Recipe(recipeItems);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -44,19 +50,43 @@ public class Recipe {
 
         Recipe recipe = (Recipe) o;
 
-        return ingredientsWithQuantity.equals(recipe.ingredientsWithQuantity);
+        return recipeItems.equals(recipe.recipeItems);
 
     }
 
     @Override
     public int hashCode() {
-        return ingredientsWithQuantity.hashCode();
+        return recipeItems.hashCode();
     }
 
     @Override
     public String toString() {
         return "Recipe{" +
-                "ingredientsWithQuantity=" + ingredientsWithQuantity +
+                "ingredientsWithQuantity=" + recipeItems +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeTypedList(this.recipeItems);
+    }
+
+    protected Recipe(Parcel in) {
+        recipeItems = in.createTypedArrayList(RecipeItem.CREATOR);
+    }
+
+    public static final Parcelable.Creator<Recipe> CREATOR = new Parcelable.Creator<Recipe>() {
+        public Recipe createFromParcel(Parcel source) {
+            return new Recipe(source);
+        }
+
+        public Recipe[] newArray(int size) {
+            return new Recipe[size];
+        }
+    };
 }

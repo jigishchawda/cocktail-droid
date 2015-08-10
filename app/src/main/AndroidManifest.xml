@@ -3,11 +3,11 @@
     package="com.cocktail.droid.cocktail_assassin" >
 
     <application
+        android:name=".CocktailAssassinApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        android:name=".CocktailAssassinApplication">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".activities.CocktailMenuActivity"
             android:label="@string/app_name" >
@@ -16,6 +16,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.DrinkDetailActivity"
+            android:label="@string/title_activity_drink_detail" >
         </activity>
     </application>
 
